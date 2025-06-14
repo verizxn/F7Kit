@@ -7,21 +7,29 @@ use verizxn\F7Kit\Navbar;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$home = new View('/', function () {
-  return <<<HTML
+$navbar = new Navbar(views: [
+  new View(title: 'Home', path: '/', code: fn(): string =>
+    <<<HTML
     <p>Hello World</p>
     <p><a href="about" class="link">Go to About</a></p>
-  HTML;
-}, new Navbar('Home'));
-
-$about = new View('/about', function () {
-  return <<<HTML
+    <p><a href="two">Navbar Two</a></p>
+  HTML),
+  new View(title: 'About', path: '/about', code: fn(): string =>
+    <<<HTML
     <p>About Page</p>
-  HTML;
-}, new Navbar('About', true));
+    <p><a href="two">Navbar Two</a></p> <!-- Not callable -->
+  HTML)
+]);
 
-$app = new App('test', 'io.test', [$home, $about], Theme::auto);
+$navbar2 = new Navbar(views: [
+  new View(title: 'Home2', path: '/two', code: fn(): string =>
+    <<<HTML
+    <p><a href="#" class="link back">Back</a></p>
+  HTML),
+]);
+
+$app = new App(name: 'test', id: 'io.test', views: array_merge($navbar->views, $navbar2->views), theme: Theme::auto);
 $app->render(
-  'https://cdnjs.cloudflare.com/ajax/libs/framework7/3.6.7/css/framework7.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/framework7/3.6.7/js/framework7.min.js'
+  cssPath: 'https://cdnjs.cloudflare.com/ajax/libs/framework7/3.6.7/css/framework7.min.css',
+  jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/framework7/3.6.7/js/framework7.min.js'
 );

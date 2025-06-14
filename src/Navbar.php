@@ -4,22 +4,26 @@ namespace verizxn\F7Kit;
 
 class Navbar
 {
-  public string $title;
-  private bool $backButton;
+  public array $views;
 
-  public function __construct(string $title, bool $backButton = false)
+  public function __construct(array $views)
   {
-    $this->title = $title;
-    $this->backButton = $backButton;
+    foreach ($views as $view)
+      if (!$view instanceof View)
+        throw new \InvalidArgumentException('Invalid views.');
+    $this->views = $views;
+
+    foreach ($views as $view)
+      $view->navbar = $this;
   }
 
-  public function render()
+  public function render(string $title)
   {
-    return '
-    <div class="navbar"><div class="navbar-inner">' .
-      ($this->backButton ?
-        '<div class="left"><a class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>'
-        : '') .
-      '<div class="title">' . $this->title . '</div></div></div>';
+    $path = $_SERVER['PATH_INFO'] ?? '/';
+    $twig = new \Twig\Environment(Templates::getTemplate('navbar'));
+    return $twig->render('navbar', [
+      'title' => $title,
+      'backButton' => $this->views[0]->path !== $path
+    ]);
   }
 }

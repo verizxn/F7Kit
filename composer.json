@@ -12,6 +12,9 @@
       "name": "verizxn"
     }
   ],
+  "require": {
+    "twig/twig": "^3.0"
+  },
   "scripts": {
     "dev": "cd tests && php -S localhost:4000"
   }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="theme-color" content="#2196f3" />
+	<title>{{ name }}</title>
+	<link rel="stylesheet" type="text/css" href="{{ cssPath }}" />
+</head>
+
+<body>
+	<div id="app">
+		<div class="statusbar"></div>
+		<div class="view view-main">
+			{{ page | raw }}
+		</div>
+	</div>
+	<div class="views tabs">
+		<div class="toolbar tabbar"></div>
+		<div class="view tab tab-active" id="tab-1"></div>
+		<div class="view tab" id="tab-2"></div>
+	</div>
+	<script src="{{ jsPath }}"></script>
+	<script>var app = new Framework7({ root: "#app", name: "{{ name }}", id: "{{ id }}", theme: "{{ theme }}", panel: { swipe: "left" }, routes: [{{ views | raw }}]}), mainView = app.views.create(".view-main");</script>
+</body>
+
+</html>
