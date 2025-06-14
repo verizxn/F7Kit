@@ -1,0 +1,18 @@
+{
+  "name": "verizxn/f7kit",
+  "description": "Framework7 Legacy rendered by PHP",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "verizxn\\F7Kit\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "verizxn"
+    }
+  ],
+  "scripts": {
+    "dev": "cd tests && php -S localhost:4000"
+  }
+}
